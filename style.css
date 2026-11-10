@@ -73,3 +73,11 @@ a,button{-webkit-tap-highlight-color:transparent}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .reveal.is-visible{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* ===== Modo escuro: imagens e contraste ===== */
+html[data-theme=dark] .hero-art-frame img{mix-blend-mode:normal;filter:brightness(.9) contrast(1.05) saturate(.95)}
+html[data-theme=dark] .brand img{background:#fff;border-radius:8px;padding:3px 8px;box-sizing:border-box}
+html[data-theme=dark] .hero-topic{color:#9fd3f7;background:#172b39cc;border-color:#ffffff1f}
+html[data-theme=dark] .button-primary{color:#07243a}
+html[data-theme=dark] .button-primary:hover{color:#07243a;background:#9fd3f7}
+html[data-theme=dark] .destination-options button[aria-pressed=true]{color:#07243a}
