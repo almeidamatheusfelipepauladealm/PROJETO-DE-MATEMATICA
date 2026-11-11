@@ -248,7 +248,7 @@ html[data-contrast="high"] .btn:hover {
 
 .brand-logo {
   display: inline-flex;
-  padding: 6px 10px;
+  padding: 7px 12px;
   border-radius: 10px;
   background: #fff;
 }
@@ -259,16 +259,8 @@ html[data-contrast="high"] .brand-logo {
 }
 
 .brand-logo img {
-  width: 96px;
+  width: 150px;
   height: auto;
-}
-
-.brand-name {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
 }
 
 .main-nav {
@@ -352,6 +344,7 @@ html[data-contrast="high"] .main-nav a[aria-current="true"] {
   display: block;
 }
 
+/* Painel de acessibilidade */
 .a11y-panel {
   position: absolute;
   right: 0;
@@ -532,6 +525,43 @@ html[data-contrast="high"] .switch[aria-checked="true"] .switch-track::after {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   align-items: center;
   gap: clamp(36px, 6vw, 80px);
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 7px 20px 7px 7px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--sky);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.hero-kicker-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #0b2545;
+}
+
+html[data-contrast="high"] .hero-kicker {
+  border-color: #fff;
+  background: #000;
+}
+
+html[data-contrast="high"] .hero-kicker-icon {
+  background: #ffe066;
+  color: #000;
 }
 
 .hero h1 {
@@ -762,6 +792,76 @@ html[data-contrast="high"] .question-card {
   line-height: 1.15;
   letter-spacing: -0.02em;
   text-wrap: balance;
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px clamp(24px, 4vw, 56px);
+  margin-top: clamp(40px, 6vw, 72px);
+  padding-top: clamp(24px, 3vw, 36px);
+  border-top: 1px solid var(--ink-soft);
+}
+
+.fact-number {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 1.5rem + 4vw, 4.6rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--blue);
+  white-space: nowrap;
+}
+
+.fact-text {
+  max-width: 48ch;
+  font-size: 1.1rem;
+  line-height: 1.45;
+}
+
+.fact-text cite {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.88rem;
+  font-style: normal;
+  color: var(--ink-soft);
+}
+
+.concepts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 56px);
+  margin: 0;
+}
+
+.concepts > div {
+  padding-top: 20px;
+  border-top: 4px solid var(--orange);
+}
+
+html[data-contrast="high"] .concepts > div {
+  border-top-color: #ffe066;
+}
+
+.concepts dt {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.concepts dd {
+  margin: 10px 0 0;
+  max-width: 34ch;
+  color: var(--ink-soft);
+}
+
+.concepts-note {
+  margin-top: clamp(32px, 5vw, 52px);
+  max-width: 62ch;
+  font-weight: 700;
 }
 
 .route {
@@ -1406,11 +1506,7 @@ html[data-contrast="high"] .caveat {
 }
 
 @media (max-width: 1020px) {
-  .brand-name {
-    display: none;
-  }
-
-  .main-nav a {
+    .main-nav a {
     padding: 10px 11px;
     font-size: 0.9rem;
   }
@@ -1425,11 +1521,7 @@ html[data-contrast="high"] .caveat {
     display: inline-flex;
   }
 
-  .brand-name {
-    display: inline;
-  }
-
-  .js .main-nav {
+    .js .main-nav {
     display: none;
   }
 
@@ -1477,6 +1569,14 @@ html[data-contrast="high"] .caveat {
   .math-grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .concepts {
+    grid-template-columns: 1fr;
+  }
+
+  .concepts dd {
+    max-width: none;
   }
 
   .math-item {
@@ -1532,11 +1632,7 @@ html[data-contrast="high"] .caveat {
     width: 84px;
   }
 
-  .brand-name {
-    font-size: 0.95rem;
-  }
-
-  .hero-actions {
+    .hero-actions {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
@@ -1579,6 +1675,10 @@ html[data-contrast="high"] .caveat {
     justify-self: stretch;
   }
 
+  .fact {
+    grid-template-columns: 1fr;
+  }
+
   .steps {
     grid-template-columns: 1fr;
   }
@@ -1618,4 +1718,3 @@ html[data-contrast="high"] .caveat {
     transition-duration: 0.01ms !important;
   }
 }
-
