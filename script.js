@@ -25,6 +25,9 @@
     read: Boolean(saved.read),
   };
 
+  // atualizado pela barra de leitura (usado pelo "Restaurar padrão")
+  let syncSelectionButton = () => {};
+
   const save = () => {
     try {
       localStorage.setItem(
@@ -109,9 +112,6 @@
         const key = item.dataset.pref;
         state[key] = !state[key];
         update();
-        if (key === "read" && state.read) speak("Leitura em voz alta ativada.");
-        if (key === "read" && !state.read && "speechSynthesis" in window)
-          window.speechSynthesis.cancel();
       })
     );
 
@@ -121,6 +121,7 @@
       state.read = false;
       state.dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       update();
+      syncSelectionButton();
     });
 
     document.addEventListener("pointerdown", event => {
@@ -139,27 +140,6 @@
   };
 
   
-  const setupSelectionReader = () => {
-    const readSelection = () => {
-      if (!state.read) return;
-      const text = window
-        .getSelection()
-        ?.toString()
-        .replace(/\s+/g, " ")
-        .trim();
-      if (text && text.length > 2 && text.length < 900) speak(text);
-    };
-
-    document.addEventListener("mouseup", () =>
-      window.setTimeout(readSelection, 80)
-    );
-    document.addEventListener("keyup", event => {
-      if (["Shift", "ArrowLeft", "ArrowRight"].includes(event.key))
-        window.setTimeout(readSelection, 80);
-    });
-  };
-
- 
   const setupHeader = () => {
     const header = document.querySelector(".site-header");
     const button = document.querySelector(".menu-toggle");
@@ -414,12 +394,190 @@
   };
 
 
+  // Barra fixa: "Ler o site todo" e "Ler texto grifado"
+  const setupReaderBar = () => {
+    const bar = document.querySelector(".reader-bar");
+    if (!bar) return;
+    if (!("speechSynthesis" in window)) {
+      bar.hidden = true;
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+    const allButton = bar.querySelector('[data-action="read-all"]');
+    const allLabel = allButton.querySelector(".reader-label");
+    const selButton = bar.querySelector('[data-action="read-selection"]');
+    const selLabel = selButton.querySelector(".reader-label");
+
+    /* ---------- Ler o site todo ---------- */
+    const BLOCKS =
+      "h1, h2, h3, h4, p, li, figcaption, blockquote, dt, dd, th, td, small";
+    let reading = false;
+    let currentEl = null;
+    let queue = []; // guarda as falas para o Chrome não descartar os eventos
+
+    const isVisible = el =>
+      !el.closest('[hidden], [aria-hidden="true"], .reader-bar') &&
+      el.getClientRects().length > 0;
+
+    // divide textos longos em frases (o Chrome corta falas muito longas)
+    const splitText = text => {
+      const parts = text.match(/[^.!?;:]+[.!?;:]*\s*/g) || [text];
+      const chunks = [];
+      let buffer = "";
+      parts.forEach(part => {
+        if ((buffer + part).length > 220 && buffer) {
+          chunks.push(buffer.trim());
+          buffer = "";
+        }
+        buffer += part;
+      });
+      if (buffer.trim()) chunks.push(buffer.trim());
+      return chunks;
+    };
+
+    const collect = () => {
+      const areas = [
+        document.getElementById("conteudo"),
+        document.querySelector(".site-footer"),
+      ].filter(Boolean);
+      const items = [];
+      areas.forEach(area =>
+        [...area.querySelectorAll(BLOCKS)]
+          // evita ler o mesmo texto duas vezes (ex.: <p> dentro de <li>)
+          .filter(el => !el.parentElement.closest(BLOCKS) && isVisible(el))
+          .forEach(el => {
+            const text = el.textContent.replace(/\s+/g, " ").trim();
+            if (text.length > 1)
+              splitText(text).forEach(chunk => items.push({ el, text: chunk }));
+          })
+      );
+      return items;
+    };
+
+    const highlight = el => {
+      if (el === currentEl) return;
+      currentEl?.classList.remove("reading-now");
+      currentEl = el;
+      if (!el) return;
+      el.classList.add("reading-now");
+      el.scrollIntoView({
+        behavior: reduceMotion.matches ? "auto" : "smooth",
+        block: "center",
+      });
+    };
+
+    const setReading = value => {
+      reading = value;
+      allButton.setAttribute("aria-pressed", String(value));
+      allLabel.textContent = value ? "Parar leitura" : "Ler o site todo";
+      if (!value) {
+        highlight(null);
+        queue = [];
+      }
+    };
+
+    const stopAll = () => {
+      if (!reading) return;
+      setReading(false);
+      synth.cancel();
+    };
+
+    const startAll = () => {
+      const items = collect();
+      if (!items.length) return;
+      synth.cancel();
+
+      const voice = synth
+        .getVoices()
+        .find(item => item.lang.toLowerCase().startsWith("pt-br"));
+
+      // enfileira o site inteiro de uma vez; o navegador lê tudo em sequência
+      const myQueue = items.map(({ el, text }, i) => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "pt-BR";
+        utterance.rate = 0.95;
+        if (voice) utterance.voice = voice;
+        utterance.onstart = () => {
+          if (queue === myQueue) highlight(el);
+        };
+        if (i === items.length - 1)
+          utterance.onend = () => {
+            if (queue === myQueue) setReading(false);
+          };
+        utterance.onerror = event => {
+          if (queue !== myQueue) return;
+          if (event.error === "interrupted" || event.error === "canceled")
+            setReading(false);
+        };
+        return utterance;
+      });
+
+      // cancel() é assíncrono em alguns navegadores: começa no próximo ciclo
+      window.setTimeout(() => {
+        setReading(true);
+        queue = myQueue;
+        myQueue.forEach(utterance => synth.speak(utterance));
+      }, 60);
+    };
+
+    allButton.addEventListener("click", () => (reading ? stopAll() : startAll()));
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && reading) stopAll();
+    });
+
+    window.addEventListener("pagehide", () => synth.cancel());
+
+    /* ---------- Ler texto grifado ---------- */
+    syncSelectionButton = () => {
+      selButton.setAttribute("aria-pressed", String(state.read));
+      selLabel.textContent = state.read
+        ? "Grifado: ligado"
+        : "Ler texto grifado";
+    };
+
+    selButton.addEventListener("click", () => {
+      state.read = !state.read;
+      save();
+      syncSelectionButton();
+      stopAll();
+      if (state.read)
+        speak("Leitura do texto grifado ligada. Selecione um trecho para ouvir.");
+      else synth.cancel();
+    });
+
+    let lastSelection = "";
+    let selTimer = 0;
+    const readSelection = () => {
+      if (!state.read) return;
+      const text = (window.getSelection()?.toString() || "")
+        .replace(/\s+/g, " ")
+        .trim();
+      if (text.length < 2 || text === lastSelection) return;
+      lastSelection = text;
+      stopAll();
+      speak(text);
+    };
+    const scheduleSelection = () => {
+      window.clearTimeout(selTimer);
+      selTimer = window.setTimeout(readSelection, 500);
+    };
+    // mouse, teclado e toque (no celular a seleção não dispara mouseup)
+    document.addEventListener("selectionchange", () => {
+      if (!(window.getSelection()?.toString() || "").trim()) lastSelection = "";
+      else scheduleSelection();
+    });
+
+    syncSelectionButton();
+  };
+
   applyPreferences();
 
   document.addEventListener("DOMContentLoaded", () => {
     setupHeader();
     setupAccessibilityPanel();
-    setupSelectionReader();
+    setupReaderBar();
     setupRouteMap();
   });
 })();
