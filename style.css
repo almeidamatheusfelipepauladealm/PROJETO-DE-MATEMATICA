@@ -75,7 +75,6 @@ html[data-contrast="high"] {
   color-scheme: dark;
 }
 
-
 *,
 *::before,
 *::after {
@@ -172,7 +171,6 @@ button {
   top: 12px;
 }
 
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -217,7 +215,6 @@ html[data-contrast="high"] .btn:hover {
 .text-link:hover {
   text-decoration-color: var(--orange);
 }
-
 
 .site-header {
   position: sticky;
@@ -354,7 +351,6 @@ html[data-contrast="high"] .main-nav a[aria-current="true"] {
 .site-header[data-menu="open"] .menu-toggle .icon-close {
   display: block;
 }
-
 
 .a11y-panel {
   position: absolute;
@@ -497,7 +493,6 @@ html[data-contrast="high"] .switch[aria-checked="true"] .switch-track::after {
   border-color: var(--blue);
 }
 
-
 .section {
   padding-block: clamp(64px, 9vw, 120px);
 }
@@ -527,7 +522,6 @@ html[data-contrast="high"] .switch[aria-checked="true"] .switch-track::after {
   color: var(--ink-soft);
   max-width: 56ch;
 }
-
 
 .hero {
   padding-block: clamp(28px, 5vw, 72px) clamp(56px, 8vw, 104px);
@@ -701,7 +695,6 @@ html[data-contrast="high"] .wave i {
   }
 }
 
-
 .problem-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
@@ -770,7 +763,6 @@ html[data-contrast="high"] .question-card {
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-
 
 .route {
   background: var(--route-bg);
@@ -862,7 +854,6 @@ html[data-contrast="high"] .map {
   height: auto;
 }
 
-/* Mapa (cores fixas: a seção é sempre escura) */
 .map-floor {
   fill: #0d3d6b;
 }
@@ -1066,7 +1057,6 @@ html[data-contrast="high"] .map-note {
   color: #fff;
 }
 
-
 .steps {
   position: relative;
   display: grid;
@@ -1130,7 +1120,6 @@ html[data-contrast="high"] .step-n {
   border-top: 1px solid var(--line);
   color: var(--ink-soft);
 }
-
 
 .math-grid {
   display: grid;
@@ -1287,7 +1276,6 @@ html[data-contrast="high"] .marks li {
   border-color: #fff;
 }
 
-
 .impact-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1362,79 +1350,60 @@ html[data-contrast="high"] .caveat {
   max-width: 70ch;
 }
 
-
 .site-footer {
-  padding-block: clamp(56px, 8vw, 96px) 36px;
-  background: var(--footer-bg);
-  color: #d6e5f2;
+  padding-block: 22px;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
 }
 
-html[data-contrast="high"] .site-footer {
-  border-top: 2px solid #fff;
-  color: #fff;
-}
-
-.footer-statement {
-  max-width: 24ch;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.7rem, 1rem + 2.8vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-  color: #fff;
-  text-wrap: balance;
-}
-
-.footer-bottom {
+.footer-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  margin-top: clamp(40px, 6vw, 72px);
-  padding-top: 28px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  gap: 16px 24px;
 }
 
 .footer-brand {
   display: flex;
   align-items: center;
-  gap: 18px;
-  font-size: 0.92rem;
-  line-height: 1.5;
+  gap: 16px;
+  line-height: 1.45;
+}
+
+.footer-brand .brand-logo {
+  flex: none;
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.footer-brand .brand-logo img {
+  width: 84px;
 }
 
 .footer-brand strong {
-  color: #fff;
+  color: var(--ink);
 }
 
 .back-to-top {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  min-height: 46px;
-  padding: 0 22px;
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1.5px solid var(--line);
   border-radius: 999px;
-  color: #fff;
+  color: var(--ink);
   font-weight: 700;
   text-decoration: none;
-  transition: background 0.2s, border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
 
 .back-to-top:hover {
-  border-color: var(--orange);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--blue);
+  background: var(--sky);
 }
-
-.site-footer :focus-visible {
-  outline-color: #ffb45f;
-}
-
-html[data-contrast="high"] .site-footer :focus-visible {
-  outline-color: #ffe066;
-}
-
 
 @media (max-width: 1020px) {
   .brand-name {
@@ -1631,7 +1600,7 @@ html[data-contrast="high"] .site-footer :focus-visible {
     padding: 22px;
   }
 
-  .footer-bottom {
+  .footer-brand {
     align-items: flex-start;
   }
 }
@@ -1649,3 +1618,4 @@ html[data-contrast="high"] .site-footer :focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
