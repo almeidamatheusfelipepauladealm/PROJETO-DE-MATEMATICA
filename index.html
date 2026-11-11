@@ -4,1681 +4,90 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#005594" />
-    <title>Matemática Inclusiva — autonomia no supermercado</title>
+    <meta name="color-scheme" content="light dark" />
+    <title>Matemática Inclusiva — um carrinho que mostra o caminho</title>
     <meta
       name="description"
-      content="Conheça o projeto Matemática Inclusiva: uma proposta de carrinho inteligente que conecta Matemática, tecnologia e autonomia no supermercado."
-    />
-    <meta
-      name="keywords"
-      content="Matemática Inclusiva, acessibilidade, autonomia, Senac, tecnologia, educação"
+      content="Proposta de carrinho inteligente que usa Matemática e orientação por áudio para ajudar pessoas com deficiência visual a fazer compras com autonomia."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Matemática Inclusiva" />
     <meta
       property="og:title"
-      content="Matemática Inclusiva — autonomia no supermercado"
+      content="Matemática Inclusiva — um carrinho que mostra o caminho"
     />
     <meta
       property="og:description"
-      content="Conhecimento matemático, tecnologia e inclusão social na proposta de um carrinho de compras inteligente."
+      content="Matemática, tecnologia e inclusão social em uma proposta de carrinho de compras inteligente."
     />
-    <meta property="og:image" content="images/senac-logo-comercio.png" />
-    <meta name="twitter:card" content="summary" />
-    <meta
-      name="twitter:title"
-      content="Matemática Inclusiva — autonomia no supermercado"
-    />
-    <meta
-      name="twitter:description"
-      content="Conhecimento matemático e tecnologia a serviço de compras mais acessíveis."
-    />
-    <meta name="twitter:image" content="images/senac-logo-comercio.png" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="images/senac-logo-comercio.png"
-    />
+    <meta property="og:image" content="images/carrinho.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="images/senac-logo-comercio.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Manrope:wght@400;500;600;650;700;750&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Aplica as preferências salvas antes de pintar a página (evita "piscar") -->
+    <script>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        try {
+          var s = JSON.parse(
+            localStorage.getItem("matematica-inclusiva-v2") || "{}"
+          );
+          var dark =
+            typeof s.dark === "boolean"
+              ? s.dark
+              : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          d.dataset.theme = dark ? "dark" : "light";
+          d.dataset.contrast = s.contrast ? "high" : "normal";
+          d.style.fontSize = 100 + (s.font || 0) * 12.5 + "%";
+        } catch (e) {}
+      })();
+    </script>
 
     <link rel="stylesheet" href="style.css" />
     <script defer src="script.js"></script>
   </head>
+
   <body>
-    <div id="root">
-      <link
-        rel="preload"
-        as="image"
-        href="images/senac-logo-comercio.png"
-      /><link
-        rel="preload"
-        as="image"
-        href="images/carrinho.png"
-        fetchpriority="high"
-      /><a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
-      <header class="site-header">
-        <div class="page-width header-inner">
-          <a
-            class="brand"
-            href="#inicio"
-            aria-label="Matemática Inclusiva — início"
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <!-- ============ CABEÇALHO ============ -->
+    <header class="site-header" data-menu="closed">
+      <div class="wrap header-inner">
+        <a class="brand" href="#inicio" aria-label="Matemática Inclusiva — início">
+          <span class="brand-logo"
             ><img
               src="images/senac-logo-comercio.png"
               alt="Senac Fecomércio Sesc"
-              width="156"
-              height="51"
-            /><span class="brand-divider" aria-hidden="true"></span
-            ><span class="brand-caption"
-              >Conhecimento que<br /><strong>transforma caminhos.</strong></span
-            ></a
-          >
-          <nav class="desktop-nav" aria-label="Navegação principal">
-            <a href="#projeto">O projeto</a
-            ><a href="#visao-geral">Visão geral</a
-            ><a href="#aprendizagem">Aprendizagem</a
-            ><a href="#problema">O problema</a
-            ><a href="#metodologia">Metodologia</a
-            ><a href="#proposta">A proposta</a
-            ><a href="#impacto">Impacto social</a>
-          </nav>
-          <div class="header-actions">
-            <div class="accessibility-wrapper">
-              <button
-                class="accessibility-toggle"
-                aria-label="Abrir opções de acessibilidade"
-                aria-expanded="false"
-                aria-controls="accessibility-panel"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-accessibility"
-                  aria-hidden="true"
-                >
-                  <circle cx="16" cy="4" r="1"></circle>
-                  <path d="m18 19 1-7-6 1"></path>
-                  <path d="m5 8 3-3 5.5 3-2.36 3.5"></path>
-                  <path d="M4.24 14.5a5 5 0 0 0 6.88 6"></path>
-                  <path d="M13.76 17.5a5 5 0 0 0-6.88-6"></path></svg
-                ><span>Acessibilidade</span>
-              </button>
-            </div>
+              width="120"
+              height="39"
+          /></span>
+          <span class="brand-name">Matemática Inclusiva</span>
+        </a>
+
+        <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+          <a href="#problema">O problema</a>
+          <a href="#trajeto">Trajeto</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#matematica">Matemática</a>
+          <a href="#impacto">Impacto</a>
+        </nav>
+
+        <div class="header-tools">
+          <div class="a11y">
             <button
-              class="mobile-menu-toggle icon-button"
-              aria-label="Abrir navegação"
+              type="button"
+              class="a11y-toggle"
               aria-expanded="false"
-              aria-controls="mobile-navigation"
+              aria-controls="a11y-panel"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-menu"
-              >
-                <line x1="4" x2="20" y1="12" y2="12"></line>
-                <line x1="4" x2="20" y1="6" y2="6"></line>
-                <line x1="4" x2="20" y1="18" y2="18"></line>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </header>
-      <main id="conteudo" tabindex="-1">
-        <section id="inicio" class="hero" aria-labelledby="hero-heading">
-          <div class="page-width hero-inner">
-            <div class="hero-copy">
-              <p class="eyebrow hero-topic" aria-hidden="true">
-                MATEMÁTICA INCLUSIVA
-              </p>
-              <h1 id="hero-heading">
-                <span class="sr-only">Matemática Inclusiva: </span>Caminhos para
-                a <em>autonomia</em> no supermercado
-              </h1>
-              <p class="hero-description">
-                Uma proposta de carrinho inteligente que conecta a Matemática à
-                tecnologia para tornar as compras mais acessíveis a pessoas com
-                deficiência visual.
-              </p>
-              <div class="hero-buttons">
-                <a class="button-primary" href="#projeto"
-                  >Conheça o projeto
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-arrow-right"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path></svg></a
-                ><a class="button-text" href="#proposta"
-                  >Explore a proposta
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="17"
-                    height="17"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-arrow-down"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 5v14"></path>
-                    <path d="m19 12-7 7-7-7"></path></svg
-                ></a>
-              </div>
-            </div>
-            <figure class="hero-art">
-              <div class="hero-art-frame">
-                <img
-                  src="images/carrinho.png"
-                  alt="Ilustração conceitual de uma pessoa com deficiência visual usando um carrinho inteligente em corredores de supermercado."
-                  width="960"
-                  height="794"
-                  fetchpriority="high"
-                />
-              </div>
-              <span class="hero-art-badge" aria-hidden="true"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-accessibility"
-                >
-                  <circle cx="16" cy="4" r="1"></circle>
-                  <path d="m18 19 1-7-6 1"></path>
-                  <path d="m5 8 3-3 5.5 3-2.36 3.5"></path>
-                  <path d="M4.24 14.5a5 5 0 0 0 6.88 6"></path>
-                  <path d="M13.76 17.5a5 5 0 0 0-6.88-6"></path></svg
-              ></span>
-              <div class="hero-art-note">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="27"
-                  height="27"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-shopping-cart"
-                  aria-hidden="true"
-                >
-                  <circle cx="8" cy="21" r="1"></circle>
-                  <circle cx="19" cy="21" r="1"></circle>
-                  <path
-                    d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
-                  ></path>
-                </svg>
-                <div>
-                  <strong>Mais autonomia. Mais inclusão.</strong
-                  ><span>Conhecimento aplicado à vida real.</span>
-                </div>
-              </div>
-              <figcaption>
-                Ilustração conceitual · não representa um produto existente
-              </figcaption>
-            </figure>
-          </div>
-        </section>
-        <div
-          class="curriculum-strip"
-          aria-label="Componente curricular e articulações"
-        >
-          <div class="page-width curriculum-inner">
-            <div class="curriculum-title">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-book-open curriculum-icon"
-                aria-hidden="true"
-              >
-                <path d="M12 7v14"></path>
-                <path
-                  d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
-                ></path>
-              </svg>
-              <div>
-                <span>Componente curricular</span><strong>Matemática</strong>
-              </div>
-            </div>
-            <span class="curriculum-divider" aria-hidden="true"></span>
-            <div class="curriculum-links">
-              <span
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-monitor"
-                  aria-hidden="true"
-                >
-                  <rect width="20" height="14" x="2" y="3" rx="2"></rect>
-                  <line x1="8" x2="16" y1="21" y2="21"></line>
-                  <line x1="12" x2="12" y1="17" y2="21"></line>
-                </svg>
-                <!-- -->Tecnologia</span
-              ><span
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="23"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-accessibility"
-                  aria-hidden="true"
-                >
-                  <circle cx="16" cy="4" r="1"></circle>
-                  <path d="m18 19 1-7-6 1"></path>
-                  <path d="m5 8 3-3 5.5 3-2.36 3.5"></path>
-                  <path d="M4.24 14.5a5 5 0 0 0 6.88 6"></path>
-                  <path d="M13.76 17.5a5 5 0 0 0-6.88-6"></path>
-                </svg>
-                <!-- -->Acessibilidade</span
-              ><span
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-heart-handshake"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-                  ></path>
-                  <path
-                    d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"
-                  ></path>
-                  <path d="m18 15-2-2"></path>
-                  <path d="m15 18-2-2"></path>
-                </svg>
-                <!-- -->Inclusão social</span
-              >
-            </div>
-          </div>
-        </div>
-        <section
-          id="visao-geral"
-          class="profile-section section"
-          aria-labelledby="profile-heading"
-        >
-          <div class="page-width">
-            <div class="profile-heading">
-              <div>
-                <p class="eyebrow">
-                  <span class="section-number">01.1 /</span> VISÃO GERAL
-                </p>
-                <h2 id="profile-heading">
-                  Um projeto de aprendizagem<br /><span
-                    >com propósito social.</span
-                  >
-                </h2>
-              </div>
-              <p>
-                Esta página apresenta a investigação, a hipótese e o caminho de
-                desenvolvimento da proposta de carrinho inteligente.
-              </p>
-            </div>
-            <div class="profile-grid">
-              <article>
-                <span class="profile-label">OBJETIVO</span>
-                <p>
-                  Investigar como a Matemática e a tecnologia podem apoiar a
-                  circulação e a localização de produtos por pessoas com
-                  deficiência visual em supermercados.
-                </p>
-              </article>
-              <article>
-                <span class="profile-label">PÚBLICO ENVOLVIDO</span>
-                <p>
-                  Pessoas com deficiência visual, estabelecimentos comerciais
-                  interessados em acessibilidade e comunidades educativas que
-                  desenvolvem soluções para problemas reais.
-                </p>
-              </article>
-              <article>
-                <span class="profile-label">ENTREGA DO PROJETO</span>
-                <p>
-                  Uma proposta conceitual de carrinho inteligente, representada
-                  por modelo ou protótipo, mapa de setores, fluxos de orientação
-                  e comandos de voz.
-                </p>
-              </article>
-            </div>
-            <div class="criteria-block">
-              <div>
-                <span class="profile-label">CRITÉRIOS DE SUCESSO</span>
-                <h3>Como saber se a proposta é acessível?</h3>
-              </div>
-              <ul>
-                <li>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="17"
-                    height="17"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-check"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5"></path></svg
-                  >Orientações curtas, claras e compreensíveis.
-                </li>
-                <li>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="17"
-                    height="17"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-check"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5"></path></svg
-                  >Rotas organizadas a partir de direção, distância e
-                  localização.
-                </li>
-                <li>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="17"
-                    height="17"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-check"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5"></path></svg
-                  >Participação de usuários na avaliação da experiência.
-                </li>
-                <li>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="17"
-                    height="17"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-check"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5"></path></svg
-                  >Segurança, autonomia e respeito às diferentes necessidades.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-        <section
-          id="projeto"
-          class="section page-width"
-          aria-labelledby="project-heading"
-        >
-          <div class="project-layout">
-            <div class="project-heading">
-              <p class="eyebrow">
-                <span class="section-number">01 /</span> O PROJETO
-              </p>
-              <h2 id="project-heading">
-                Aprender Matemática.<br />Transformar o cotidiano.
-              </h2>
-            </div>
-            <div class="project-copy">
-              <p>
-                O projeto Matemática Inclusiva teve como objetivo elaborar uma
-                proposta de carrinho de compras inteligente para auxiliar
-                pessoas com deficiência visual na circulação e na localização de
-                produtos em supermercados.
-              </p>
-              <p>
-                A atividade aproximou os conhecimentos matemáticos de uma
-                necessidade cotidiana, evidenciando sua contribuição para a
-                acessibilidade e a inclusão social.
-              </p>
-              <blockquote class="project-quote">
-                Como o conhecimento matemático pode ajudar a tornar as compras
-                mais acessíveis?
-              </blockquote>
-            </div>
-          </div>
-          <div class="competence-block">
-            <span class="competence-icon" aria-hidden="true"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="31"
-                height="31"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-target"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="6"></circle>
-                <circle cx="12" cy="12" r="2"></circle></svg
-            ></span>
-            <div>
-              <h3>Conhecimentos que se tornam competências</h3>
-              <p>
-                Aplicação de conhecimentos de localização, distância e direção
-                na elaboração de soluções acessíveis, com investigação de
-                problemas e comunicação colaborativa.
-              </p>
-            </div>
-          </div>
-          <div class="formative-heading">
-            <h3>Marcas formativas</h3>
-            <p>Aprendizagens que vão além da sala de aula.</p>
-          </div>
-          <div class="formative-marks">
-            <article class="formative-mark">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="26"
-                height="26"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-brain-circuit"
-                aria-hidden="true"
-              >
-                <path
-                  d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"
-                ></path>
-                <path d="M9 13a4.5 4.5 0 0 0 3-4"></path>
-                <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path>
-                <path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path>
-                <path d="M6 18a4 4 0 0 1-1.967-.516"></path>
-                <path d="M12 13h4"></path>
-                <path d="M12 18h6a2 2 0 0 1 2 2v1"></path>
-                <path d="M12 8h8"></path>
-                <path d="M16 8V5a2 2 0 0 1 2-2"></path>
-                <circle cx="16" cy="13" r=".5"></circle>
-                <circle cx="18" cy="3" r=".5"></circle>
-                <circle cx="20" cy="21" r=".5"></circle>
-                <circle cx="20" cy="8" r=".5"></circle>
-              </svg>
-              <h4>Domínio técnico-científico</h4>
-              <p>
-                Articula conhecimentos matemáticos à análise de situações e à
-                elaboração de soluções acessíveis.
-              </p>
-            </article>
-            <article class="formative-mark">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="26"
-                height="26"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-eye"
-                aria-hidden="true"
-              >
-                <path
-                  d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
-                ></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-              <h4>Visão crítica</h4>
-              <p>
-                Reconhece barreiras de acessibilidade e reflete sobre seus
-                efeitos na autonomia dos usuários.
-              </p>
-            </article>
-            <article class="formative-mark">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="26"
-                height="26"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-monitor"
-                aria-hidden="true"
-              >
-                <rect width="20" height="14" x="2" y="3" rx="2"></rect>
-                <line x1="8" x2="16" y1="21" y2="21"></line>
-                <line x1="12" x2="12" y1="17" y2="21"></line>
-              </svg>
-              <h4>Autonomia digital</h4>
-              <p>
-                Considera recursos tecnológicos capazes de oferecer orientações
-                acessíveis durante as compras.
-              </p>
-            </article>
-            <article class="formative-mark">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="26"
-                height="26"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-message-circle"
-                aria-hidden="true"
-              >
-                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
-              </svg>
-              <h4>Comunicação e colaboração</h4>
-              <p>
-                Investiga problemas e constrói propostas por meio de comunicação
-                e trabalho colaborativo.
-              </p>
-            </article>
-            <article class="formative-mark">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="26"
-                height="26"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-lightbulb"
-                aria-hidden="true"
-              >
-                <path
-                  d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"
-                ></path>
-                <path d="M9 18h6"></path>
-                <path d="M10 22h4"></path>
-              </svg>
-              <h4>Atitude criativa e empreendedora</h4>
-              <p>
-                Propõe alternativas criativas para problemas reais, considerando
-                possibilidades e limitações da solução.
-              </p>
-            </article>
-          </div>
-        </section>
-        <section
-          id="aprendizagem"
-          class="section learning-section"
-          aria-labelledby="learning-heading"
-        >
-          <div class="page-width">
-            <div class="section-heading heading-row">
-              <div>
-                <p class="eyebrow">
-                  <span class="section-number">02 /</span> PERCURSO DE
-                  APRENDIZAGEM
-                </p>
-                <h2 id="learning-heading">
-                  Investigar. Refletir.<br />Criar novos caminhos.
-                </h2>
-                <div
-                  class="learning-cycle"
-                  aria-label="Ciclo de ação, reflexão e nova ação"
-                >
-                  <span>Ação</span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-move-right"
-                    aria-hidden="true"
-                  >
-                    <path d="M18 8L22 12L18 16"></path>
-                    <path d="M2 12H22"></path></svg
-                  ><span>Reflexão</span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-move-right"
-                    aria-hidden="true"
-                  >
-                    <path d="M18 8L22 12L18 16"></path>
-                    <path d="M2 12H22"></path></svg
-                  ><span>Nova ação</span>
-                </div>
-              </div>
-              <p class="heading-description">
-                Três etapas conectam os conhecimentos matemáticos à construção
-                colaborativa de uma solução inclusiva.
-              </p>
-            </div>
-            <div class="steps">
-              <article class="step">
-                <span class="step-index" aria-label="Etapa 1">01</span>
-                <div class="step-title">
-                  <p class="step-phase">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-compass"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"
-                      ></path>
-                      <circle cx="12" cy="12" r="10"></circle></svg
-                    >Ação
-                  </p>
-                  <h3>Investigação e planejamento</h3>
-                </div>
-                <div class="step-body">
-                  <p>
-                    Os estudantes investigaram as dificuldades enfrentadas por
-                    pessoas com deficiência visual durante as compras e
-                    planejaram a proposta do carrinho. Aplicaram conceitos de
-                    localização, distância, direção e organização espacial à
-                    análise dos corredores, dos setores e dos possíveis
-                    trajetos.
-                  </p>
-                  <div class="step-tags">
-                    <span>Localização</span><span>Distância</span
-                    ><span>Direção</span>
-                  </div>
-                </div>
-              </article>
-              <article class="step">
-                <span class="step-index" aria-label="Etapa 2">02</span>
-                <div class="step-title">
-                  <p class="step-phase">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-eye"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
-                      ></path>
-                      <circle cx="12" cy="12" r="3"></circle></svg
-                    >Reflexão
-                  </p>
-                  <h3>Acessibilidade e autonomia</h3>
-                </div>
-                <div class="step-body">
-                  <p>
-                    A reflexão abordou as barreiras que poderiam limitar a
-                    independência dos usuários e os recursos tecnológicos
-                    capazes de oferecer orientações acessíveis. Foram
-                    consideradas a clareza das informações, a facilidade de uso
-                    e as possibilidades e limitações da solução.
-                  </p>
-                  <div class="step-tags">
-                    <span>Clareza</span><span>Facilidade de uso</span
-                    ><span>Limites da solução</span>
-                  </div>
-                </div>
-              </article>
-              <article class="step">
-                <span class="step-index" aria-label="Etapa 3">03</span>
-                <div class="step-title">
-                  <p class="step-phase">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-lightbulb"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"
-                      ></path>
-                      <path d="M9 18h6"></path>
-                      <path d="M10 22h4"></path></svg
-                    >Nova ação
-                  </p>
-                  <h3>Estruturação da proposta e contribuição social</h3>
-                </div>
-                <div class="step-body">
-                  <p>
-                    A proposta foi organizada em torno de um modelo ou protótipo
-                    de carrinho inteligente. Seu desenvolvimento valorizou o
-                    raciocínio matemático, a criatividade e a colaboração,
-                    relacionando a aprendizagem à construção de soluções para
-                    problemas reais.
-                  </p>
-                  <div class="step-tags">
-                    <span>Raciocínio matemático</span><span>Criatividade</span
-                    ><span>Colaboração</span>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-        <section
-          id="problema"
-          class="context-section section"
-          aria-labelledby="problem-heading"
-        >
-          <div class="page-width">
-            <div class="context-intro">
-              <div>
-                <p class="eyebrow">
-                  <span class="section-number">03 /</span> SITUAÇÃO-PROBLEMA
-                </p>
-                <h2 id="problem-heading">
-                  Onde a Matemática encontra<br /><span
-                    >uma necessidade real.</span
-                  >
-                </h2>
-              </div>
-              <p>
-                Pessoas com deficiência visual podem ter dificuldade para
-                localizar produtos, identificar setores e se orientar entre os
-                corredores do supermercado. Isso pode tornar as compras mais
-                demoradas e aumentar a necessidade de ajuda de outras pessoas.
-              </p>
-            </div>
-            <div class="question-card">
-              <span class="question-mark" aria-hidden="true">?</span>
-              <div>
-                <span class="card-kicker">PERGUNTA NORTEADORA</span>
-                <h3>
-                  Como um carrinho inteligente pode ajudar o cliente a encontrar
-                  produtos e circular pelo mercado com mais autonomia?
-                </h3>
-              </div>
-            </div>
-            <div class="hypothesis-block">
-              <div class="hypothesis-label">
-                <span class="section-number">03.1 /</span
-                ><strong>HIPÓTESE</strong>
-              </div>
-              <p>
-                Acreditamos que um carrinho com orientação por áudio e
-                localização dos produtos pode facilitar as compras. Com
-                conceitos matemáticos de direção, distância e localização, ele
-                poderá indicar o caminho até o setor desejado e informar quando
-                o usuário precisar mudar de direção.
-              </p>
-            </div>
-            <div class="context-subheading">
-              <div>
-                <span class="card-kicker">PARA QUE SERVIRIA</span>
-                <h3>Um carrinho pensado para acompanhar o usuário.</h3>
-              </div>
-              <p>
-                Quatro funções conectam o pedido do cliente ao caminho até o
-                produto.
-              </p>
-            </div>
-            <div class="function-cards">
-              <article class="function-card">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="23"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-search"
-                  aria-hidden="true"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path></svg
-                ><span>Buscar</span>
-                <h4>Produto desejado</h4>
-                <p>A pessoa informa o item que procura.</p>
-              </article>
-              <article class="function-card">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="23"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-map-pin"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
-                  ></path>
-                  <circle cx="12" cy="10" r="3"></circle></svg
-                ><span>Localizar</span>
-                <h4>Setor no mapa</h4>
-                <p>O carrinho identifica onde o produto está.</p>
-              </article>
-              <article class="function-card">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="23"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-volume2"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"
-                  ></path>
-                  <path d="M16 9a5 5 0 0 1 0 6"></path>
-                  <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path></svg
-                ><span>Orientar</span>
-                <h4>Caminho por áudio</h4>
-                <p>O usuário recebe instruções simples para o percurso.</p>
-              </article>
-              <article class="function-card">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="23"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-info"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M12 16v-4"></path>
-                  <path d="M12 8h.01"></path></svg
-                ><span>Informar</span>
-                <h4>Produto próximo</h4>
-                <p>O carrinho avisa quando a chegada está próxima.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-        <section
-          class="usage-section section page-width"
-          aria-labelledby="usage-heading"
-        >
-          <div class="usage-layout">
-            <div>
-              <p class="eyebrow">
-                <span class="section-number">03.2 /</span> COMO SERIA USADO?
-              </p>
-              <h2 id="usage-heading">
-                Do pedido ao setor,<br /><span>com orientação sonora.</span>
-              </h2>
-              <p class="usage-copy">
-                O cliente informa o item que procura. O carrinho identifica no
-                mapa onde ele está e fornece instruções sonoras para orientar o
-                percurso. A proposta também poderá prever alertas de obstáculos,
-                caso sejam incorporados sensores adequados.
-              </p>
-            </div>
-            <div class="usage-flow" aria-label="Fluxo de uso do carrinho">
-              <div><strong>RECEBER</strong><span>o produto desejado</span></div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-route"
-                aria-hidden="true"
-              >
-                <circle cx="6" cy="19" r="3"></circle>
-                <path
-                  d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"
-                ></path>
-                <circle cx="18" cy="5" r="3"></circle>
-              </svg>
-              <div><strong>LOCALIZAR</strong><span>o setor no mapa</span></div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-route"
-                aria-hidden="true"
-              >
-                <circle cx="6" cy="19" r="3"></circle>
-                <path
-                  d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"
-                ></path>
-                <circle cx="18" cy="5" r="3"></circle>
-              </svg>
-              <div>
-                <strong>ORIENTAR</strong><span>o caminho por áudio</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-route"
-                aria-hidden="true"
-              >
-                <circle cx="6" cy="19" r="3"></circle>
-                <path
-                  d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"
-                ></path>
-                <circle cx="18" cy="5" r="3"></circle>
-              </svg>
-              <div><strong>CHEGAR</strong><span>ao produto</span></div>
-            </div>
-          </div>
-        </section>
-        <section
-          id="metodologia"
-          class="method-section section"
-          aria-labelledby="method-heading"
-        >
-          <div class="page-width">
-            <div class="method-heading">
-              <div>
-                <p class="eyebrow">
-                  <span class="section-number">03.3 /</span> METODOLOGIA
-                </p>
-                <h2 id="method-heading">
-                  Investigar para propor.<br /><span>Propor para incluir.</span>
-                </h2>
-              </div>
-              <p>
-                O caminho combina escuta, planejamento, raciocínio matemático e
-                avaliação da experiência de uso.
-              </p>
-            </div>
-            <div class="method-grid">
-              <article class="method-card">
-                <span>0<!-- -->1</span>
-                <h3>Investigação</h3>
-                <p>
-                  Identificar as principais dificuldades enfrentadas por pessoas
-                  com deficiência visual nos supermercados.
-                </p>
-              </article>
-              <article class="method-card">
-                <span>0<!-- -->2</span>
-                <h3>Planejamento</h3>
-                <p>
-                  Definir as funções do carrinho e pensar em comandos simples e
-                  acessíveis.
-                </p>
-              </article>
-              <article class="method-card">
-                <span>0<!-- -->3</span>
-                <h3>Matemática na prática</h3>
-                <p>
-                  Organizar os setores em um mapa e utilizar localização,
-                  direção e distância para planejar trajetos.
-                </p>
-              </article>
-              <article class="method-card">
-                <span>0<!-- -->4</span>
-                <h3>Funcionamento proposto</h3>
-                <p>
-                  O usuário informa o produto desejado; o sistema consulta sua
-                  localização no mapa do mercado e transmite instruções por
-                  áudio, como “siga em frente”, “vire à direita” ou “você está
-                  próximo do produto”.
-                </p>
-              </article>
-              <article class="method-card">
-                <span>0<!-- -->5</span>
-                <h3>Avaliação</h3>
-                <p>
-                  Considerar a clareza das orientações, a facilidade de uso, os
-                  benefícios e as limitações da proposta.
-                </p>
-              </article>
-            </div>
-          </div>
-        </section>
-        <section
-          id="proposta"
-          class="section page-width"
-          aria-labelledby="proposal-heading"
-        >
-          <div class="proposal-layout">
-            <div class="proposal-copy">
-              <p class="eyebrow">
-                <span class="section-number">04 /</span> A PROPOSTA
-              </p>
-              <h2 id="proposal-heading">
-                Um carrinho inteligente.<br />Uma ideia de inclusão.
-              </h2>
-              <p class="proposal-description">
-                A proposta foi organizada em torno de um modelo ou protótipo de
-                carrinho de compras inteligente. Localização, distância, direção
-                e organização espacial orientam o planejamento dos corredores,
-                setores e possíveis trajetos.
-              </p>
-              <div class="proposal-details">
-                <details open="">
-                  <summary>
-                    <span
-                      ><svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-volume2"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"
-                        ></path>
-                        <path d="M16 9a5 5 0 0 1 0 6"></path>
-                        <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
-                      </svg>
-                      Orientações acessíveis</span
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="17"
-                      height="17"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-chevron-down"
-                      aria-hidden="true"
-                    >
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg>
-                  </summary>
-                  <p>
-                    A reflexão considera recursos tecnológicos capazes de
-                    oferecer orientações claras para a circulação e a
-                    localização de produtos. A informação precisa ser
-                    compreensível e acessível ao usuário.
-                  </p>
-                </details>
-                <details>
-                  <summary>
-                    <span
-                      ><svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-accessibility"
-                        aria-hidden="true"
-                      >
-                        <circle cx="16" cy="4" r="1"></circle>
-                        <path d="m18 19 1-7-6 1"></path>
-                        <path d="m5 8 3-3 5.5 3-2.36 3.5"></path>
-                        <path d="M4.24 14.5a5 5 0 0 0 6.88 6"></path>
-                        <path d="M13.76 17.5a5 5 0 0 0-6.88-6"></path>
-                      </svg>
-                      Facilidade de uso e autonomia</span
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="17"
-                      height="17"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-chevron-down"
-                      aria-hidden="true"
-                    >
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg>
-                  </summary>
-                  <p>
-                    A facilidade de uso e a clareza das informações são aspectos
-                    centrais da proposta. O objetivo é apoiar a independência
-                    durante as compras, respeitando as necessidades das pessoas
-                    com deficiência visual.
-                  </p>
-                </details>
-                <details>
-                  <summary>
-                    <span
-                      ><svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-info"
-                        aria-hidden="true"
-                      >
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M12 16v-4"></path>
-                        <path d="M12 8h.01"></path>
-                      </svg>
-                      Possibilidades e limitações</span
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="17"
-                      height="17"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-chevron-down"
-                      aria-hidden="true"
-                    >
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg>
-                  </summary>
-                  <p>
-                    O projeto apresenta uma contribuição potencial, não uma
-                    solução já validada. O funcionamento em um supermercado real
-                    dependeria de desenvolvimento, avaliação de acessibilidade e
-                    participação dos usuários.
-                  </p>
-                </details>
-              </div>
-              <p class="proposal-disclaimer">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-info"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M12 16v-4"></path>
-                  <path d="M12 8h.01"></path></svg
-                >Esta é uma proposta educacional. O mapa ao lado exemplifica
-                conceitos matemáticos; não simula um carrinho real.
-              </p>
-            </div>
-            <div class="concept-map">
-              <div class="map-heading">
-                <span class="eyebrow">DA MATEMÁTICA AO COTIDIANO</span
-                ><span class="concept-label">Exemplo conceitual</span>
-              </div>
-              <h3>Um trajeto. Muitas possibilidades.</h3>
-              <p class="map-intro">
-                Escolha um setor e veja como a orientação espacial pode apoiar o
-                percurso.
-              </p>
-              <div
-                class="destination-options"
-                role="group"
-                aria-label="Escolha um setor do mapa conceitual"
-              >
-                <button aria-pressed="true">
-                  Hortifruti<svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-arrow-right"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg></button
-                ><button aria-pressed="false">Mercearia</button
-                ><button aria-pressed="false">Laticínios</button>
-              </div>
-              <svg
-                viewBox="0 0 420 300"
-                role="img"
-                aria-labelledby="map-title map-description"
-              >
-                <title id="map-title">
-                  Mapa ilustrativo de um supermercado: trajeto até Hortifruti
-                </title>
-                <desc id="map-description">
-                  Entrada na parte inferior esquerda e três setores.
-                  <!-- -->Siga pelo corredor à esquerda. O setor de hortifruti
-                  está à sua frente.<!-- -->
-                  <!-- -->O desenho é esquemático e não possui escala de
-                  distância.
-                </desc>
-                <rect
-                  x="20"
-                  y="20"
-                  width="380"
-                  height="260"
-                  rx="16"
-                  class="map-floor"
-                ></rect>
-                <path
-                  d="M 70 25 V 274 M 210 25 V 274 M 350 25 V 274 M 25 53 H 396 M 25 256 H 396"
-                  class="map-corridors"
-                ></path>
-                <rect
-                  x="100"
-                  y="93"
-                  width="80"
-                  height="108"
-                  rx="8"
-                  class="map-shelf"
-                ></rect>
-                <rect
-                  x="240"
-                  y="93"
-                  width="80"
-                  height="108"
-                  rx="8"
-                  class="map-shelf"
-                ></rect>
-                <path
-                  d="M 110 121 H 170 M 110 145 H 170 M 110 169 H 170 M 250 121 H 310 M 250 145 H 310 M 250 169 H 310"
-                  class="shelf-lines"
-                ></path>
-                <text x="134" y="79" class="map-text">Hortifruti</text>
-                <text x="249" y="222" class="map-text">Mercearia</text>
-                <text x="260" y="79" class="map-text">Laticínios</text>
-                <path d="M 70 256 L 70 75 L 118 75" class="map-route"></path>
-                <circle cx="70" cy="256" r="12" class="map-origin"></circle>
-                <circle cx="70" cy="256" r="4" fill="white"></circle>
-                <circle cx="118" cy="75" r="10" class="map-end"></circle>
-                <circle cx="118" cy="75" r="4" fill="white"></circle>
-                <text x="84" y="238" class="map-text map-entry">Entrada</text>
-              </svg>
-              <div class="map-guidance" aria-live="polite" aria-atomic="true">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="21"
-                  height="21"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-navigation"
-                  aria-hidden="true"
-                >
-                  <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
-                </svg>
-                <p>
-                  <strong
-                    >Destino:
-                    <!-- -->Hortifruti</strong
-                  ><span
-                    >Siga pelo corredor à esquerda. O setor de hortifruti está à
-                    sua frente.</span
-                  >
-                </p>
-              </div>
-              <div class="map-legend">
-                <span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-map-pin"
-                  >
-                    <path
-                      d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
-                    ></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  Localização</span
-                ><span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-route"
-                  >
-                    <circle cx="6" cy="19" r="3"></circle>
-                    <path
-                      d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"
-                    ></path>
-                    <circle cx="18" cy="5" r="3"></circle>
-                  </svg>
-                  Trajeto e distância</span
-                ><span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-navigation"
-                  >
-                    <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
-                  </svg>
-                  Direção</span
-                >
-              </div>
-              <p class="map-note">
-                Mapa sem escala. As orientações são ilustrativas; não constituem
-                navegação real.
-              </p>
-            </div>
-          </div>
-        </section>
-        <section
-          id="impacto"
-          class="section impact-section"
-          aria-labelledby="impact-heading"
-        >
-          <div class="page-width impact-layout">
-            <div class="impact-heading">
-              <p class="eyebrow">
-                <span class="section-number">05 /</span> CONTRIBUIÇÃO SOCIAL
-              </p>
-              <h2 id="impact-heading">
-                Acessibilidade é um caminho para participar.
-              </h2>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="45"
-                height="45"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-heart-handshake"
-                aria-hidden="true"
-              >
-                <path
-                  d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-                ></path>
-                <path
-                  d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"
-                ></path>
-                <path d="m18 15-2-2"></path>
-                <path d="m15 18-2-2"></path>
-              </svg>
-            </div>
-            <div class="impact-copy">
-              <p>
-                A importância do projeto esteve no reconhecimento da
-                acessibilidade como condição para a participação social.
-              </p>
-              <p>
-                No âmbito educativo, a experiência estimulou um olhar mais
-                atento às necessidades das pessoas com deficiência visual e ao
-                papel dos estudantes na proposição de mudanças.
-              </p>
-              <p>
-                Como contribuição potencial, o carrinho apresentou
-                possibilidades de reduzir a dependência de terceiros e ampliar a
-                autonomia durante as compras, indicando caminhos para tornar os
-                espaços comerciais mais inclusivos.
-              </p>
-              <div class="impact-outcomes">
-                <span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-check"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5"></path>
-                  </svg>
-                  <!-- -->Mais autonomia e confiança durante as compras.</span
-                ><span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-check"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5"></path>
-                  </svg>
-                  <!-- -->Menor dependência de acompanhantes para encontrar
-                  produtos.</span
-                ><span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-check"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5"></path>
-                  </svg>
-                  <!-- -->Maior acessibilidade nos estabelecimentos
-                  comerciais.</span
-                ><span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-check"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5"></path>
-                  </svg>
-                  <!-- -->Conscientização sobre inclusão e respeito às pessoas
-                  com deficiência visual.</span
-                >
-              </div>
-              <p class="impact-validation">
-                A proposta é conceitual e precisaria ser testada com usuários
-                para avaliar sua segurança, precisão e facilidade de uso.
-              </p>
-              <p class="impact-conclusion">
-                O carrinho inteligente aplica a Matemática a uma necessidade do
-                cotidiano. Localização, direção e distância são utilizadas para
-                planejar rotas e orientar o usuário dentro do supermercado. Seu
-                impacto potencial é ampliar a autonomia das pessoas com
-                deficiência visual, reduzir barreiras e tornar o ambiente de
-                compras mais inclusivo. O projeto mostra que a tecnologia,
-                quando planejada para atender diferentes necessidades, pode
-                promover independência, participação social e igualdade de
-                oportunidades.
-              </p>
-            </div>
-          </div>
-        </section>
-        <section class="closing" aria-labelledby="closing-heading">
-          <div class="page-width closing-inner">
-            <div>
-              <h2 id="closing-heading">
-                O próximo caminho começa<br />com
-                <span>um olhar mais inclusivo.</span>
-              </h2>
-              <p>
-                Matemática, criatividade e colaboração a serviço da participação
-                social.
-              </p>
-            </div>
-            <a class="button-text" href="#aprendizagem"
-              >Revisite o percurso
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -1689,72 +98,415 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-arrow-up-right"
                 aria-hidden="true"
               >
-                <path d="M7 7h10v10"></path>
-                <path d="M7 17 17 7"></path></svg
-            ></a>
+                <circle cx="16" cy="4" r="1"></circle>
+                <path d="m18 19 1-7-6 1"></path>
+                <path d="m5 8 3-3 5.5 3-2.36 3.5"></path>
+                <path d="M4.24 14.5a5 5 0 0 0 6.88 6"></path>
+                <path d="M13.76 17.5a5 5 0 0 0-6.88-6"></path>
+              </svg>
+              <span>Acessibilidade</span>
+            </button>
+
+            <div class="a11y-panel" id="a11y-panel" role="region" aria-label="Opções de acessibilidade" hidden>
+              <div class="a11y-row">
+                <span id="font-label">Tamanho do texto</span>
+                <div class="font-stepper" role="group" aria-labelledby="font-label">
+                  <button type="button" class="step-btn" data-font="down" aria-label="Diminuir texto">A−</button>
+                  <output class="font-value" aria-live="polite">100%</output>
+                  <button type="button" class="step-btn" data-font="up" aria-label="Aumentar texto">A+</button>
+                </div>
+              </div>
+              <button type="button" class="switch" data-pref="dark" role="switch" aria-checked="false">
+                <span>Modo escuro</span><span class="switch-track" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="switch" data-pref="contrast" role="switch" aria-checked="false">
+                <span>Alto contraste</span><span class="switch-track" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="switch" data-pref="read" role="switch" aria-checked="false">
+                <span>Ler em voz alta o texto selecionado</span><span class="switch-track" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="a11y-reset" data-pref="reset">Restaurar padrão</button>
+            </div>
           </div>
-        </section>
-      </main>
-      <footer class="site-footer">
-        <div class="page-width">
-          <div class="footer-main">
-            <a
-              href="#inicio"
-              class="footer-brand"
-              aria-label="Matemática Inclusiva — voltar ao início"
+
+          <button
+            type="button"
+            class="menu-toggle"
+            aria-expanded="false"
+            aria-controls="main-nav"
+            aria-label="Abrir navegação"
+          >
+            <svg class="icon-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line>
+            </svg>
+            <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="conteudo" tabindex="-1">
+      <!-- ============ INÍCIO ============ -->
+      <section id="inicio" class="hero" aria-labelledby="hero-title">
+        <div class="wrap hero-grid">
+          <div class="hero-copy">
+            <h1 id="hero-title">Um carrinho que mostra o caminho até o produto</h1>
+            <p class="lead">
+              Uma proposta que usa Matemática e orientação por áudio para ajudar
+              pessoas com deficiência visual a circular no supermercado com
+              mais autonomia.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" href="#trajeto">Testar o trajeto</a>
+              <a class="text-link" href="#problema">Entender o problema</a>
+            </div>
+            <p class="hero-meta">
+              <strong>Componente curricular:</strong> Matemática, em diálogo com
+              tecnologia, acessibilidade e inclusão social.
+            </p>
+          </div>
+
+          <figure class="hero-photo">
+            <div class="photo-frame">
+              <picture>
+                <source srcset="images/carrinho.webp" type="image/webp" />
+                <img
+                  src="images/carrinho.jpg"
+                  alt="Ilustração conceitual de um homem com deficiência visual, de bengala, empurrando um carrinho de compras inteligente por um corredor de supermercado."
+                  width="1448"
+                  height="1086"
+                  fetchpriority="high"
+                />
+              </picture>
+            </div>
+            <div class="audio-bubble">
+              <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              <div>
+                <p>“Vire à direita. Você está perto do produto.”</p>
+                <small>Exemplo de orientação por áudio</small>
+              </div>
+            </div>
+            <figcaption>Ilustração conceitual. Não representa um produto existente.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ O PROBLEMA ============ -->
+      <section id="problema" class="section section-sky" aria-labelledby="problema-title">
+        <div class="wrap problem-grid">
+          <div class="problem-copy">
+            <h2 id="problema-title">Em um supermercado, quase tudo depende de enxergar</h2>
+            <p>
+              Pessoas com deficiência visual podem ter dificuldade para
+              localizar produtos, identificar setores e se orientar entre os
+              corredores. As compras ficam mais demoradas e dependem da ajuda
+              de outras pessoas.
+            </p>
+            <div class="hypothesis">
+              <h3>Nossa hipótese</h3>
+              <p>
+                Um carrinho com orientação por áudio e localização dos produtos
+                pode facilitar as compras. Com direção, distância e
+                localização, ele indica o caminho até o setor e avisa quando
+                virar.
+              </p>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <p class="question-label">Pergunta norteadora</p>
+            <blockquote>
+              Como um carrinho inteligente pode ajudar o cliente a encontrar
+              produtos e circular pelo mercado com mais autonomia?
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TRAJETO INTERATIVO ============ -->
+      <section id="trajeto" class="section route" aria-labelledby="trajeto-title">
+        <div class="wrap">
+          <div class="route-head">
+            <h2 id="trajeto-title">Escolha um setor e veja o caminho</h2>
+            <p>
+              Um exemplo conceitual: o carrinho sabe onde você está no mapa e
+              transforma o trajeto em instruções curtas.
+            </p>
+          </div>
+
+          <div class="route-app" id="route-app">
+            <div class="route-controls" role="group" aria-label="Escolha o setor de destino">
+              <button type="button" data-sector="hortifruti" aria-pressed="true">Hortifruti</button>
+              <button type="button" data-sector="mercearia" aria-pressed="false">Mercearia</button>
+              <button type="button" data-sector="laticinios" aria-pressed="false">Laticínios</button>
+            </div>
+
+            <div class="route-stage">
+              <figure class="map">
+                <svg viewBox="0 0 420 300" role="img" aria-labelledby="map-title map-desc">
+                  <title id="map-title">Mapa ilustrativo de um supermercado</title>
+                  <desc id="map-desc">Escolha um setor para ouvir o trajeto.</desc>
+                  <defs>
+                    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                      <path d="M30 0H0V30" class="map-grid-line"></path>
+                    </pattern>
+                  </defs>
+
+                  <rect x="30" y="30" width="360" height="240" rx="14" class="map-floor"></rect>
+                  <rect x="30" y="30" width="360" height="240" rx="14" fill="url(#grid)"></rect>
+
+                  <path
+                    d="M60 60H360M60 240H360M60 60V270M210 60V240M360 60V240"
+                    class="map-aisle"
+                  ></path>
+
+                  <!-- prateleiras -->
+                  <rect data-shelf="hortifruti" x="90" y="90" width="90" height="120" rx="8" class="map-shelf"></rect>
+                  <rect data-shelf="laticinios" x="240" y="90" width="90" height="56" rx="8" class="map-shelf"></rect>
+                  <rect data-shelf="mercearia" x="240" y="154" width="90" height="56" rx="8" class="map-shelf"></rect>
+
+                  <text x="135" y="154" class="map-label">Hortifruti</text>
+                  <text x="285" y="122" class="map-label">Laticínios</text>
+                  <text x="285" y="186" class="map-label">Mercearia</text>
+                  <text x="74" y="288" class="map-label map-label-start">Entrada</text>
+
+                  <!-- trajeto -->
+                  <path id="route-path" class="map-route" d="M60 270V60H120"></path>
+                  <circle id="route-start" class="map-start" cx="60" cy="270" r="8"></circle>
+                  <circle id="route-end" class="map-end" cx="120" cy="60" r="10"></circle>
+                  <circle id="route-cart" class="map-cart" cx="60" cy="270" r="7"></circle>
+                </svg>
+                <noscript><p class="map-note">Ative o JavaScript para testar o trajeto.</p></noscript>
+              </figure>
+
+              <div class="route-panel">
+                <dl class="route-stats">
+                  <div>
+                    <dt>Distância</dt>
+                    <dd id="stat-distance">9 quadrados</dd>
+                  </div>
+                  <div>
+                    <dt>Curvas</dt>
+                    <dd id="stat-turns">1</dd>
+                  </div>
+                  <div>
+                    <dt>Saída → chegada</dt>
+                    <dd id="stat-coords">(2, 0) → (4, 7)</dd>
+                  </div>
+                </dl>
+
+                <ol class="route-steps" id="route-steps" aria-live="polite"></ol>
+
+                <button type="button" class="btn btn-accent" id="route-listen">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                  </svg>
+                  Ouvir e ver o trajeto
+                </button>
+              </div>
+            </div>
+
+            <p class="map-note">
+              Mapa ilustrativo, sem escala. Cada quadrado é só uma unidade do
+              mapa, não uma medida real. Não é navegação de verdade.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ COMO FUNCIONA ============ -->
+      <section id="como-funciona" class="section" aria-labelledby="como-title">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="como-title">Do pedido ao produto, em quatro passos</h2>
+          </div>
+
+          <ol class="steps">
+            <li>
+              <span class="step-n" aria-hidden="true">1</span>
+              <h3>Informar</h3>
+              <p>A pessoa diz qual produto procura.</p>
+            </li>
+            <li>
+              <span class="step-n" aria-hidden="true">2</span>
+              <h3>Localizar</h3>
+              <p>O carrinho encontra o setor no mapa do mercado.</p>
+            </li>
+            <li>
+              <span class="step-n" aria-hidden="true">3</span>
+              <h3>Orientar</h3>
+              <p>Instruções por áudio, como “siga em frente” e “vire à direita”.</p>
+            </li>
+            <li>
+              <span class="step-n" aria-hidden="true">4</span>
+              <h3>Avisar</h3>
+              <p>O carrinho informa quando o produto está por perto.</p>
+            </li>
+          </ol>
+
+          <p class="steps-note">
+            Em uma versão futura, sensores adequados poderiam incluir alertas
+            de obstáculos.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ A MATEMÁTICA ============ -->
+      <section id="matematica" class="section section-sky" aria-labelledby="mat-title">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="mat-title">A matemática que organiza o caminho</h2>
+            <p>Três ideias transformam um mapa em instruções simples.</p>
+          </div>
+
+          <div class="math-grid">
+            <article class="math-item">
+              <svg class="dgm" viewBox="0 0 160 110" role="img" aria-label="Plano com um ponto marcado por um par de coordenadas">
+                <path d="M20 90H150M20 90V10" class="dgm-axis"></path>
+                <path d="M40 90v-4M60 90v-4M80 90v-4M100 90v-4M120 90v-4M140 90v-4M20 70h4M20 50h4M20 30h4" class="dgm-axis"></path>
+                <path d="M100 90V50H20" class="dgm-dash"></path>
+                <circle cx="100" cy="50" r="6" class="dgm-dot"></circle>
+                <text x="108" y="44" class="dgm-text">(4, 2)</text>
+              </svg>
+              <h3>Localização</h3>
+              <p>Cada setor tem um “endereço” no mapa: um par de coordenadas.</p>
+            </article>
+
+            <article class="math-item">
+              <svg class="dgm" viewBox="0 0 160 110" role="img" aria-label="Trajeto em linha reta dividido em trechos, somando a distância">
+                <path d="M20 20H150M20 50H150M20 80H150M20 20V80M50 20V80M80 20V80M110 20V80M140 20V80" class="dgm-grid"></path>
+                <path d="M20 80V50H110" class="dgm-route"></path>
+                <circle cx="20" cy="80" r="5" class="dgm-start"></circle>
+                <circle cx="110" cy="50" r="6" class="dgm-dot"></circle>
+                <text x="26" y="104" class="dgm-text">1 + 3 = 4 quadrados</text>
+              </svg>
+              <h3>Distância</h3>
+              <p>O trajeto é medido em trechos. Somar os trechos dá o total.</p>
+            </article>
+
+            <article class="math-item">
+              <svg class="dgm" viewBox="0 0 160 110" role="img" aria-label="Seta que segue em frente e depois vira à direita">
+                <path d="M50 96V40H112" class="dgm-route"></path>
+                <path d="m102 28 14 12-14 12" class="dgm-route"></path>
+                <circle cx="50" cy="96" r="5" class="dgm-start"></circle>
+                <text x="60" y="76" class="dgm-text">em frente</text>
+                <text x="66" y="28" class="dgm-text">direita</text>
+              </svg>
+              <h3>Direção</h3>
+              <p>Cada curva vira uma ordem curta: à direita ou à esquerda.</p>
+            </article>
+          </div>
+
+          <div class="journey">
+            <h3>Como os estudantes chegaram à proposta</h3>
+            <ol>
+              <li>
+                <strong>Ação</strong>
+                <p>Investigaram as dificuldades de quem tem deficiência visual no supermercado e planejaram o carrinho.</p>
+              </li>
+              <li>
+                <strong>Reflexão</strong>
+                <p>Discutiram barreiras, clareza das informações, facilidade de uso, possibilidades e limites.</p>
+              </li>
+              <li>
+                <strong>Nova ação</strong>
+                <p>Organizaram a proposta em um modelo ou protótipo, com raciocínio matemático, criatividade e colaboração.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="marks">
+            <h3>Marcas formativas</h3>
+            <ul>
+              <li>Domínio técnico-científico</li>
+              <li>Visão crítica</li>
+              <li>Autonomia digital</li>
+              <li>Comunicação e colaboração</li>
+              <li>Atitude criativa e empreendedora</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ IMPACTO ============ -->
+      <section id="impacto" class="section" aria-labelledby="impacto-title">
+        <div class="wrap impact-grid">
+          <div class="impact-copy">
+            <h2 id="impacto-title">Acessibilidade é condição para participar</h2>
+            <p class="lead">
+              O carrinho aplica a Matemática a uma necessidade do cotidiano:
+              localização, direção e distância viram rotas e orientação dentro
+              do supermercado.
+            </p>
+          </div>
+
+          <ul class="outcomes">
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+              Mais autonomia e confiança durante as compras.
+            </li>
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+              Menos dependência de acompanhantes para encontrar produtos.
+            </li>
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+              Estabelecimentos comerciais mais acessíveis.
+            </li>
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+              Mais consciência sobre inclusão e respeito às pessoas com deficiência visual.
+            </li>
+          </ul>
+        </div>
+
+        <div class="wrap">
+          <aside class="caveat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            <p>
+              <strong>Ainda é uma proposta.</strong> Antes de existir de verdade,
+              o carrinho precisaria ser testado com usuários para avaliar
+              segurança, precisão e facilidade de uso.
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ RODAPÉ ============ -->
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="footer-statement">
+          Tecnologia planejada para diferentes necessidades promove
+          independência, participação social e igualdade de oportunidades.
+        </p>
+        <div class="footer-bottom">
+          <div class="footer-brand">
+            <span class="brand-logo"
               ><img
                 src="images/senac-logo-comercio.png"
                 alt="Senac Fecomércio Sesc"
-                width="156"
-                height="51"
-              />
-              <div>
-                <strong>Matemática Inclusiva</strong
-                ><span>Educação que conecta conhecimento e inclusão.</span>
-              </div></a
-            >
-            <nav aria-labelledby="footer-nav-title">
-              <p id="footer-nav-title" class="footer-nav-title">
-                Navegue pelo projeto
-              </p>
-              <a href="#projeto">O projeto</a
-              ><a href="#visao-geral">Visão geral</a
-              ><a href="#aprendizagem">Aprendizagem</a
-              ><a href="#problema">O problema</a
-              ><a href="#metodologia">Metodologia</a
-              ><a href="#proposta">A proposta</a
-              ><a href="#impacto">Impacto social</a>
-            </nav>
-          </div>
-          <div class="footer-bottom">
+                width="120"
+                height="39"
+                loading="lazy"
+            /></span>
             <p>
-              Projeto educacional · Matemática, tecnologia e inclusão social.
-              Proposta conceitual, sem validação de produto.
+              <strong>Matemática Inclusiva</strong><br />
+              Projeto educacional. Proposta conceitual, sem validação de produto.
             </p>
-            <a href="#inicio" class="back-to-top"
-              >Voltar ao topo
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-arrow-up"
-                aria-hidden="true"
-              >
-                <path d="m5 12 7-7 7 7"></path>
-                <path d="M12 19V5"></path></svg
-            ></a>
           </div>
+          <a class="back-to-top" href="#inicio">
+            Voltar ao topo
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+          </a>
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
   </body>
 </html>
