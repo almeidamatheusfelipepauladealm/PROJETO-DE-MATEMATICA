@@ -479,6 +479,44 @@ html[data-contrast="high"] .switch[aria-checked="true"] .switch-track::after {
   transform: translateX(20px);
 }
 
+.read-all {
+  margin-top: 6px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.read-all:hover {
+  filter: brightness(1.1);
+}
+
+.read-all[aria-pressed="true"] {
+  background: var(--orange);
+}
+
+html[data-contrast="high"] .read-all {
+  background: #ffe066;
+  color: #000;
+}
+
+.reading-now {
+  outline: 3px solid var(--orange);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+html[data-contrast="high"] .reading-now {
+  outline-color: #ffe066;
+}
+
 .a11y-reset {
   margin-top: 6px;
   min-height: 44px;

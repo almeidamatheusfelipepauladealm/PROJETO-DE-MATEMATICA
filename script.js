@@ -414,12 +414,111 @@
   };
 
 
+  // Lê todo o conteúdo principal do site, bloco por bloco
+  const setupReadAll = () => {
+    const button = document.querySelector('[data-action="read-all"]');
+    const main = document.getElementById("conteudo");
+    if (!button || !main) return;
+    if (!("speechSynthesis" in window)) {
+      button.hidden = true;
+      return;
+    }
+
+    const label = button.querySelector(".read-all-label");
+    const BLOCKS = "h1, h2, h3, h4, p, li, figcaption, blockquote, dt, dd, th, td, small";
+    let reading = false;
+    let sessionId = 0;
+    let currentEl = null;
+
+    const isVisible = el =>
+      !el.closest('[hidden], [aria-hidden="true"]') && el.getClientRects().length > 0;
+
+    const collectBlocks = () =>
+      [...main.querySelectorAll(BLOCKS)]
+        // evita ler o mesmo texto duas vezes (ex.: <p> dentro de <li>)
+        .filter(el => !el.parentElement.closest(BLOCKS) && isVisible(el))
+        .map(el => ({ el, text: el.textContent.replace(/\s+/g, " ").trim() }))
+        .filter(item => item.text.length > 1);
+
+    const highlight = el => {
+      currentEl?.classList.remove("reading-now");
+      currentEl = el;
+      if (!el) return;
+      el.classList.add("reading-now");
+      el.scrollIntoView({
+        behavior: reduceMotion.matches ? "auto" : "smooth",
+        block: "center",
+      });
+    };
+
+    const setReading = value => {
+      reading = value;
+      button.setAttribute("aria-pressed", String(value));
+      label.textContent = value ? "Parar leitura" : "Ler o site todo";
+      if (!value) highlight(null);
+    };
+
+    const stop = () => {
+      sessionId++;
+      setReading(false);
+      window.speechSynthesis.cancel();
+    };
+
+    const start = () => {
+      const blocks = collectBlocks();
+      if (!blocks.length) return;
+      window.speechSynthesis.cancel();
+      setReading(true);
+
+      const voice = window.speechSynthesis
+        .getVoices()
+        .find(item => item.lang.toLowerCase().startsWith("pt-br"));
+
+      const session = ++sessionId;
+      let index = 0;
+      const next = () => {
+        if (!reading || session !== sessionId) return;
+        if (index >= blocks.length) {
+          setReading(false);
+          return;
+        }
+        const { el, text } = blocks[index++];
+        highlight(el);
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "pt-BR";
+        utterance.rate = 0.95;
+        if (voice) utterance.voice = voice;
+        utterance.onend = next;
+        utterance.onerror = event => {
+          if (session !== sessionId) return;
+          // outra fala do site cancelou a leitura
+          if (event.error === "interrupted" || event.error === "canceled") {
+            setReading(false);
+            return;
+          }
+          next();
+        };
+        window.speechSynthesis.speak(utterance);
+      };
+      next();
+    };
+
+    button.addEventListener("click", () => (reading ? stop() : start()));
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && reading) stop();
+    });
+
+    window.addEventListener("pagehide", () => window.speechSynthesis.cancel());
+  };
+
   applyPreferences();
 
   document.addEventListener("DOMContentLoaded", () => {
     setupHeader();
     setupAccessibilityPanel();
     setupSelectionReader();
+    setupReadAll();
     setupRouteMap();
   });
 })();
