@@ -123,6 +123,21 @@
               <button type="button" class="switch" data-pref="contrast" role="switch" aria-checked="false">
                 <span>Alto contraste</span><span class="switch-track" aria-hidden="true"></span>
               </button>
+              <!-- Leitura em voz alta -->
+              <div class="reader-bar" role="group" aria-label="Leitura em voz alta">
+                <button type="button" class="reader-btn" data-action="read-all" aria-pressed="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                  </svg>
+                  <span class="reader-label">Ler o site todo</span>
+                </button>
+                <button type="button" class="reader-btn" data-action="read-selection" aria-pressed="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m9 11-6 6v3h9l3-3"></path><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path>
+                  </svg>
+                  <span class="reader-label">Ler texto grifado</span>
+                </button>
+              </div>
               <button type="button" class="a11y-reset" data-pref="reset">Restaurar padrão</button>
             </div>
           </div>
@@ -560,21 +575,5 @@
         </a>
       </div>
     </footer>
-
-    <!-- Barra fixa de leitura em voz alta -->
-    <div class="reader-bar" role="group" aria-label="Leitura em voz alta">
-      <button type="button" class="reader-btn" data-action="read-all" aria-pressed="false">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-        </svg>
-        <span class="reader-label">Ler o site todo</span>
-      </button>
-      <button type="button" class="reader-btn" data-action="read-selection" aria-pressed="false">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m9 11-6 6v3h9l3-3"></path><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path>
-        </svg>
-        <span class="reader-label">Ler texto grifado</span>
-      </button>
-    </div>
   </body>
 </html>
