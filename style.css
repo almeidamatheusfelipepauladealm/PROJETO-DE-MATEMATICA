@@ -248,14 +248,12 @@ html[data-contrast="high"] .btn:hover {
 
 .brand-logo {
   display: inline-flex;
-  padding: 6px 10px;
-  border-radius: 10px;
-  background: #fff;
 }
 
-html[data-theme="dark"] .brand-logo,
-html[data-contrast="high"] .brand-logo {
-  box-shadow: 0 0 0 1px var(--line);
+/* sem fundo: no modo escuro/alto contraste a logo fica branca para continuar legível */
+html[data-theme="dark"] .brand-logo img,
+html[data-contrast="high"] .brand-logo img {
+  filter: brightness(0) invert(1);
 }
 
 .brand-logo img {
@@ -1447,7 +1445,6 @@ html[data-contrast="high"] .caveat {
 
 .footer-brand .brand-logo {
   flex: none;
-  box-shadow: 0 0 0 1px var(--line);
 }
 
 .footer-brand .brand-logo img {
@@ -1699,10 +1696,6 @@ html[data-contrast="high"] .caveat {
   .brand {
     gap: 10px;
     min-width: 0;
-  }
-
-  .brand-logo {
-    padding: 5px 8px;
   }
 
   .brand-logo img {
