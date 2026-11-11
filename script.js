@@ -394,7 +394,7 @@
   };
 
 
-  // Barra fixa: "Ler o site todo" e "Ler texto grifado"
+  // Botões do painel de acessibilidade: "Ler o site todo" e "Ler texto grifado"
   const setupReaderBar = () => {
     const bar = document.querySelector(".reader-bar");
     if (!bar) return;
@@ -521,7 +521,16 @@
       }, 60);
     };
 
-    allButton.addEventListener("click", () => (reading ? stopAll() : startAll()));
+    allButton.addEventListener("click", () => {
+      if (reading) {
+        stopAll();
+        return;
+      }
+      startAll();
+      // fecha o painel de acessibilidade para não cobrir o texto em leitura
+      const toggle = document.querySelector(".a11y-toggle");
+      if (toggle?.getAttribute("aria-expanded") === "true") toggle.click();
+    });
 
     document.addEventListener("keydown", event => {
       if (event.key === "Escape" && reading) stopAll();
