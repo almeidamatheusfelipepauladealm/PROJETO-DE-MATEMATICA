@@ -479,32 +479,66 @@ html[data-contrast="high"] .switch[aria-checked="true"] .switch-track::after {
   transform: translateX(20px);
 }
 
-.read-all {
-  margin-top: 6px;
-  min-height: 44px;
+.reader-bar {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reader-bar[hidden] {
+  display: none;
+}
+
+.reader-btn {
+  min-height: 48px;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  border: 0;
-  border-radius: 12px;
+  padding: 10px 16px;
+  border: 2px solid transparent;
+  border-radius: 999px;
   background: var(--blue);
   color: #fff;
+  font: inherit;
   font-weight: 700;
+  box-shadow: 0 12px 30px -10px rgba(4, 35, 63, 0.6);
   cursor: pointer;
 }
 
-.read-all:hover {
-  filter: brightness(1.1);
+.reader-btn:hover {
+  filter: brightness(1.12);
 }
 
-.read-all[aria-pressed="true"] {
+.reader-btn[aria-pressed="true"] {
   background: var(--orange);
+  color: #1a1000;
 }
 
-html[data-contrast="high"] .read-all {
+html[data-contrast="high"] .reader-btn {
+  background: #000;
+  color: #fff;
+  border-color: #fff;
+}
+
+html[data-contrast="high"] .reader-btn[aria-pressed="true"] {
   background: #ffe066;
   color: #000;
+}
+
+@media (max-width: 520px) {
+  .reader-bar {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .reader-btn {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
 }
 
 .reading-now {
